@@ -2,8 +2,8 @@
 Python3 code for flight punctuality comparison.
 
 Objectives:
-(1*) Pull first hand flight data from airport website(s)
-(2) Collect data over time
+(1*) Pull first hand flight data from airport website(s),
+(2) Collect data over time,
 (3) Analyse delays by airlines, route & time of day 
 
 Motivation:
