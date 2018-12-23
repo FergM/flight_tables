@@ -1,0 +1,16 @@
+1) Requests 
+2) Beautiful Soup 
+
+How to Install (Windows)
+
+	Open Windows PowerShell
+
+	Check Python & Pip are Installed:
+		>python --version
+		>pip --version
+
+	Go to ~  C:\Users\.....\programs\python 3.6 (not sure if necessary but this worked)
+
+	Then Run:
+		>pip install requests
+		>pip install beautifulsoup4
