@@ -22,8 +22,6 @@ for table_row in table_body: #For each thing in the table_body
     flight_data['Origin'] = table_row.find_all('td')[1].text.strip() #The 1 here picks out Origin as the 1+1th data element in the row
     flight_data['Airline'] = table_row.find_all('td')[2].text.strip() #The 1 here picks out Origin as the 1+1th data element in the row
 
-#    inmate_details['age'] = inmate_profile_rows[0].findAll('td')[0].text.strip()
-
     table_data.append(flight_data)
 
 #print(table_data[:10])#Print the things with <td> tag
@@ -36,3 +34,7 @@ for flight in table_data[:10]:
 for flight in table_data[:10]:
     Origin = flight['Airline']
     print(Origin)
+
+#Recap of the above
+#   Each row from the website's table is a dictionary entry
+#   table_data is a list of all the dictionary entries
