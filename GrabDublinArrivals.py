@@ -1,6 +1,10 @@
+#GRABDUBLINARRIVALS.py takes arrivals data from dublin airport website and Saves
+#it in json format to my working directory.
+
 #----------------------------------Setup
 import requests
 from bs4 import BeautifulSoup
+import json
 
 url_to_scrape = 'https://www.dublinairport.com/flight-information/live-departures'
 
@@ -11,7 +15,7 @@ soup = BeautifulSoup(r.text, 'html.parser')
 ##print(soup.prettify())
 
 #----------------------------------
-table_data = [] #I think this is a list
+table_data = [] #This is a list
 
 table_body = soup.tbody.find_all('tr') #<tbody> is a selector/tag
 #<tr> is also a selector/tag
@@ -38,3 +42,7 @@ for flight in table_data[:10]:
 #Recap of the above
 #   Each row from the website's table is a dictionary entry
 #   table_data is a list of all the dictionary entries
+
+#Save out as Json
+with open('DublinArrivals_2018-12-23.json', 'w') as fout:
+    json.dump(table_data,fout)
