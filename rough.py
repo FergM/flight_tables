@@ -67,4 +67,32 @@ def getDelayList(flightObjectList):
 #	Revisit after 1 week's data collected (can verify vs punctuality websites)
 #
 #---------------------Get Departing flights with Actual Departure value:
-#for flight in 
+departedFlights = []
+
+for flight in payload:
+	if flight['ActualOffBlocksDateTime'] != None:
+		departedFlights.append(flight)
+
+delayList = []
+for flight in departedFlights:
+	actual = datetime.strptime(flight['ActualOffBlocksDateTime'], "%Y-%m-%dT%H:%M:%S")
+	planned = datetime.strptime(flight['ScheduledDateTime'], "%Y-%m-%dT%H:%M:%S")
+	if actual > planned: 
+		delay = actual - planned
+		delay = delay.seconds/60
+		print("Delay in Minutes: ", delay)
+
+	else:
+		delay = planned - actual
+		delay = delay.seconds/60
+		delay = delay*-1
+		print("Delay in Minutes:", delay)
+	delayList.append(delay)
+	
+#-------------------------#
+print("list length = ", len(delayList))
+
+delayList = sorted(delayList)
+
+for delay in delayList:
+	print(delay)
