@@ -18,7 +18,7 @@ def loadJson(fileName):
 #------------------------------
 #INPUTS
 
-flight_str = "FR288" #"EI184"
+flight_str = "EK162"#"FR288" #"EI184"
 date_str = date.isoformat(date.today()) #"2020-02-04"
 
 payload = loadJson("DublinArrivals.json")
@@ -30,10 +30,11 @@ flightOneData = []
 todaysFlights = []
 
 for flight in payload:
-	if flight['FlightIdentity'] == "EI184":
-		print("found EI0184")
+	if flight['FlightIdentity'] == flight_str:
+		print("\n\nfound", flight_str)
 		print("DateTime is: ", flight["ScheduledDateTime"])
-		#print(flight['ScheduledDateTime'][:10])		
+		#print(flight['ScheduledDateTime'][:10])
+		print("All Info: \n", flight, "\n\n")		
 		flightOneData.append(flight)
 
 
