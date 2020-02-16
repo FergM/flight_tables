@@ -21,6 +21,8 @@ def saveHtml(soup, fileName):
 
 if __name__ == "__main__":
 
+    sys.exit("Exit by default, to avoid accidental running.")
+
     first_date = datetime(2020,2,12)
     last_date = datetime(2020, 2,15)
     delta = last_date - (first_date - timedelta(days=1))
