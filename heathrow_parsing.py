@@ -48,12 +48,12 @@ class ParsedFlights(object):
 if __name__ == '__main__':
     raw_data = load_data()
     raw_flights = extract_flight_list(raw_data)
-    print("\nHere's raw data from the first flight: \n", raw_flights[0])
+    print("\nHere's the PAYLOAD from the first flight in `raw_data`: \n", raw_flights[0])
 
     print("\n--------------------Debugging for unittest of Departure/Scheduled Time")
     flight = Flight(raw_flights[0])
     print("Scheduled:", flight.scheduled_datetime, "\nDeparture:", flight.departure_datetime)
-    print("Scheduled:", type(flight.scheduled_datetime), "\nDeparture:", type(flight.departure_datetime))
+    print("Scheduled datatype:", type(flight.scheduled_datetime), "\nDeparture datatype:", type(flight.departure_datetime))
 
     print("\n--------------------Here's the LATEST, it's all coming together in a dataframe")
     parsed_flights = ParsedFlights(raw_flights)

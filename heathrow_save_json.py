@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import json
 import requests
+import sys
 
 def getHtmlSoup(url_to_scrape):
     r = requests.get(url_to_scrape)
@@ -21,7 +22,7 @@ def saveHtml(soup, fileName):
 
 if __name__ == "__main__":
 
-    sys.exit("Exit by default, to avoid accidental running.")
+    sys.exit("Exit by default, to avoid accidental running.\n")
 
     first_date = datetime(2020,2,12)
     last_date = datetime(2020, 2,15)
