@@ -1,3 +1,4 @@
+from datetime import datetime
 from heathrow_extraction import load_data, extract_flight_list
 import numpy as np
 import pandas as pd
@@ -14,10 +15,14 @@ class Flight(object):
         #Add more parsing to get times as datetime format & remove whitespace from flightId
         assert type(raw_flight) == dict
         self.flight_id = raw_flight['flightIdentifier']
-        self.scheduled_datetime = raw_flight['origin']['scheduledDateTime']['local']
+        scheduled_time_str = raw_flight['origin']['scheduledDateTime']['local']
+        self.scheduled_datetime = datetime.strptime(scheduled_time_str[:-7], "%Y-%m-%dT%H:%M")
         status = raw_flight['origin']['status']['messages']['message'][0]['text']
         if status == "Departed":
-            self.departure_datetime = raw_flight['origin']['status']['messages']['message'][0]['data']
+            departure_time_str = raw_flight['origin']['status']['messages']['message'][0]['data']
+            departure_datetime_str = raw_flight['origin']['status']['statusTime']
+            if departure_time_str == departure_datetime_str[11:-8]:
+                self.departure_datetime = datetime.strptime(departure_datetime_str[:-8], "%Y-%m-%dT%H:%M")
         return None
 
     def to_list(self):

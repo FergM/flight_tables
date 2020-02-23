@@ -22,8 +22,8 @@ class TestFlight(unittest.TestCase):
     def test_the_init(self):
         flight = Flight(self.raw_flight)
         self.assertIsInstance(flight.flight_id, str) #ToDO: assert regex string length >=0 with no whitespace.
-#        self.assertIsInstance(self.flight.scheduled_datetime, datetime)
-#        self.assertIsInstance(self.flight.departure_datetime, datetime)
+        self.assertIsInstance(flight.scheduled_datetime, datetime)
+        self.assertIsInstance(flight.departure_datetime, datetime)#Note: will return None and fail in some cases. 
 
     def test_to_list(self):
         flight = Flight(self.raw_flight)
