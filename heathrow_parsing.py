@@ -37,12 +37,12 @@ class Flight(object):
             return delay_mins
 
     def to_list(self):
-        flight_info = [self.flight_id, self.scheduled_datetime, self.departure_datetime]
+        flight_info = [self.flight_id, self.scheduled_datetime, self.departure_datetime, self.delay_mins]
         return flight_info
 
     @staticmethod
     def labels():
-        return ["flight_id", "scheduled_datetime", "departure_datetime"]
+        return ["flight_id", "scheduled_datetime", "departure_datetime", "delay_mins"]
 
 class ParsedFlights(object):
 
