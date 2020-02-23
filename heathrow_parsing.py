@@ -9,6 +9,7 @@ class Flight(object):
         self.flight_id = None
         self.scheduled_datetime = None
         self.departure_datetime = None
+        self.delay_mins = None
         self.parse_heathrow_flight(raw_flight)
 
     def parse_heathrow_flight(self, raw_flight):
@@ -24,6 +25,14 @@ class Flight(object):
             if departure_time_str == departure_datetime_str[11:-8]:
                 self.departure_datetime = datetime.strptime(departure_datetime_str[:-8], "%Y-%m-%dT%H:%M")
         return None
+
+    @staticmethod
+    def calculate_delay_minutes(departure_datetime, scheduled_datetime):
+        if None in (departure_datetime, scheduled_datetime):
+            return None
+        else:
+            delay_mins = (departure_datetime - scheduled_datetime).total_seconds() / 60
+            return delay_mins
 
     def to_list(self):
         flight_info = [self.flight_id, self.scheduled_datetime, self.departure_datetime]

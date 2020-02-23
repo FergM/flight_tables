@@ -19,6 +19,29 @@ class TestFlight(unittest.TestCase):
     def setUp(self):
         self.raw_flight = SampleData().test_flight_departed_1
 
+    def test_delay_calculation(self):
+        #Instantiate the class
+        #   to access delay calc function
+        flight = Flight(self.raw_flight)
+
+        #A Proper Delay
+        scheduled_datetime = datetime(2020,2,2,7,30)
+        departure_datetime = datetime(2020,2,2,8,30)
+        delay_mins = Flight.calculate_delay_minutes(departure_datetime, scheduled_datetime)
+        self.assertEqual(delay_mins, 60)
+
+        #An Early Flight
+        scheduled_datetime = datetime(2020,2,2,7,30)
+        departure_datetime = datetime(2020,2,2,6,30)
+        delay_mins = flight.calculate_delay_minutes(departure_datetime, scheduled_datetime)
+        self.assertEqual(delay_mins, -60)
+
+        #Flight with None as an input
+        departure_datetime = None
+        scheduled_datetime = datetime(2020,2,2,8,30)
+        delay_mins = flight.calculate_delay_minutes(departure_datetime, scheduled_datetime)
+        self.assertEqual(delay_mins, None)
+
     def test_the_init(self):
         flight = Flight(self.raw_flight)
         self.assertIsInstance(flight.flight_id, str) #ToDO: assert regex string length >=0 with no whitespace.
