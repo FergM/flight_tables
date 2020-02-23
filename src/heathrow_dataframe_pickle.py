@@ -15,6 +15,10 @@ mydf = pd.DataFrame()
 print("\nempty df is:", mydf)
 #----------------------------------Append Everything
 #2.2) need to add a for loop
+from os import listdir
+
+filenames = [item for item in listdir("../data/heathrow_data/") if item[-6:]=="Z.json"]
+print("Filenames are:\n\t", filenames)
 
 #2.1) simplify heathrow parsing and use it to create dataframe
     #Select File
