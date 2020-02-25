@@ -10,12 +10,16 @@ print("Loaded Tail is:\n", loaded_df.tail())
 print("\n\n")
 
 #----------------------------
-flight1 = "UA921"
-flight2 = "AA6144"#"AA141"
+flight1 = "SN2096"#"AA141"#"UA921"
+flight2 = "BA404"#"AA6144"
 
 
 df1 = loaded_df.loc[loaded_df['flight_id'] == flight1, ["scheduled_datetime", "delay_mins"]]
 df2 = loaded_df.loc[loaded_df['flight_id'] == flight2, ["scheduled_datetime", "delay_mins"]]
+
+#Care about dates not datetimes (for this part now)
+df1['scheduled_datetime'] = df1['scheduled_datetime'].apply(lambda x: x.date())
+df2['scheduled_datetime'] = df2['scheduled_datetime'].apply(lambda x: x.date())
 
 df1 = df1.set_index("scheduled_datetime")
 df2 = df2.set_index("scheduled_datetime")
@@ -25,17 +29,46 @@ df1 = df1.rename(columns={"delay_mins": "delay_mins1"})
 print(df1)
 print(df2)
 
-merged_df = df1.join(df2, how="outer")
+merged_df = df1.join(df2, how="inner") #outer to keep days where only one of them flew
 
-merged_df.delay_mins1.iloc[17] = float("nan")
+#merged_df.delay_mins1.iloc[9] = float("nan")#17#Hack to handle none into floatnan
 
 f1 = merged_df.delay_mins1.values
 f2 = merged_df.delay_mins.values
+
+import numpy as np 
+
+f2 = list(f2)
+f1 = list(f1)
+
+print(f1)
+print(type(f1))
+for i in range(0,len(f1)-1):
+    if f1[i] == None:
+        f1[i] = float("nan")
+print(f1)
+
+for i in range(0,len(f2)-1):
+    if f2[i] == None:
+        f2[i] = float("nan")
 
 print(merged_df)
 print(f1)
 print(f2)
 print("--------------------")
+
+###-----------hack to get diff
+'''for i in range(0,len(f2)):
+    f2[i] = f2[i]-f1[i]
+for i in range(0,len(f2)):
+    f1[i] = 0
+print(len(f2))
+print(len(f1))
+
+print(f2)
+print(f1)
+'''
+###-----------hack to get diff end
 
 #-----------------------------------------Plot
 
