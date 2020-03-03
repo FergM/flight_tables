@@ -23,7 +23,7 @@ def saveHtml(soup, fileName):
 if __name__ == "__main__":
 
     #Select Date Range
-    last_date = datetime.today().date()-timedelta(days=1) #Or datetime(2020, 2,24)
+    last_date = datetime.today().date()-timedelta(days=1) #Or datetime(2020, 2,24).date()
     first_date =  last_date-timedelta(days=7) 
     delta = last_date - (first_date - timedelta(days=1))
     number_of_days = delta.days
