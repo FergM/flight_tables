@@ -54,6 +54,6 @@ if __name__=="__main__":
     iso_date_str = "2020-03-20"
     direction = "arrivals"
 
-    json_data_raw = fetch_heathrow_data(iso_date_str, direction)
-    print("\nOutput Length:", len(json_data_raw['flightSummaryList']['flight']), "characters")
-    print("Sample content: \n\t", (str(json_data_raw['flightSummaryList']['flight']))[0:800])
+    heathrow_data = fetch_heathrow_data(iso_date_str, direction)
+    print("\nOutput Length:", len(heathrow_data['flightSummaryList']['flight']), "characters")
+    print("Sample content: \n\t", (str(heathrow_data['flightSummaryList']['flight']))[0:800])
