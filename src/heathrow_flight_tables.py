@@ -23,7 +23,7 @@ class HeathrowFlightTables(object):
     @staticmethod
     def csv_to_df(file_name):
         with open( file_name, "r" ) as f:
-        df = pd.read_csv(file_name)
+            df = pd.read_csv(file_name)
         return df
 
 if __name__=="__main__":
