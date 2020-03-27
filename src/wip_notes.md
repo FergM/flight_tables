@@ -26,3 +26,6 @@ HeathrowFlightTables.departures_csv(iso_date_str)
 * arrivals
 * cancels
 * "other" not departed/arrived and not cancelled.
+
+* from heathrow_extraction import extract_flight_list # load_data
+* from heathrow_parsing import ParsedFlights

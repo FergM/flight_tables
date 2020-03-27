@@ -20,6 +20,12 @@ class HeathrowFlightTables(object):
         heathrow_df = dict_to_dataframe(heathrow_raw_dict)
         df_to_csv(heathrow_df, file_name)
 
+    @staticmethod
+    def csv_to_df(file_name):
+        with open( file_name, "r" ) as f:
+        df = pd.read_csv(file_name)
+        return df
+
 if __name__=="__main__":
     #from heathrow_flight_tables import HeathrowFlightTables
     print("start")
