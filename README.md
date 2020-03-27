@@ -6,7 +6,7 @@ Current version is for Heathrow Airport only.
 
 ## Instructions
 
-### : Save Departures as CSV
+### Save Departures as CSV
 
 #### Basic Example
 Run the following in command line:
@@ -20,4 +20,4 @@ This will output `heathrow_departures_2020-03-25.csv`, a file which contains all
 * You can then execute ```HeathrowFlightTables.departures_csv("2020-03-25")``` to save a csv for the specified date.
 
 ## Motivation:
-The initial motivation was around analysing flight punctuality. When you google for this most results are not detailed enough to compare one flight IDs against another. One use case fot this tool is to find airlines/flight times which are less delayed.
+The initial motivation was around analysing flight punctuality. When you google for this most results are not detailed enough to compare one flight IDs against another. One use case for this tool is to find airlines/flight times which are less delayed.
