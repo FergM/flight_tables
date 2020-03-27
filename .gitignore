@@ -1,0 +1,6 @@
+__pycache__/
+
+# Data Files
+*.json
+*.csv
+*.p    # pickles
