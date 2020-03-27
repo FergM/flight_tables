@@ -56,4 +56,6 @@ if __name__=="__main__":
 
     heathrow_data = fetch_heathrow_data(iso_date_str, direction)
     print("\nOutput Length:", len(heathrow_data['flightSummaryList']['flight']), "characters")
-    print("Sample content: \n\t", (str(heathrow_data['flightSummaryList']['flight']))[0:800])
+    print("Sample content raw: \n\t", (str(heathrow_data))[0:800])
+    print("Sample content selected: \n\t", (str(heathrow_data['flightSummaryList']['flight']))[0:800])
+    print(type(heathrow_data))

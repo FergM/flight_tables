@@ -9,7 +9,6 @@ from date_to_dict import fetch_heathrow_data
 def dict_to_dataframe(heathrow_data):
 
     heathrow_df = pd.DataFrame()
-    print("\nempty df is:", heathrow_df)
 
     raw_flights = extract_flight_list(heathrow_data)
 

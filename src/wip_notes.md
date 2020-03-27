@@ -6,8 +6,6 @@ dataframe -> csv
 
 
 Extra:
-    solve for departures, arrivals, cancels
-    + find "other"
 
 
 -------------------------final Call
@@ -21,3 +19,10 @@ Saves csv table of arrivals data on selected date to working directory.
 
 HeathrowFlightTables.arrivals_csv(iso_date_str)
 HeathrowFlightTables.departures_csv(iso_date_str)
+
+# WIP Friday 27 March
+## Cases to Solve
+* departures
+* arrivals
+* cancels
+* "other" not departed/arrived and not cancelled.
