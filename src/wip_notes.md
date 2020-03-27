@@ -32,6 +32,11 @@ Saves csv table of arrivals data on selected date to working directory.
 * Validate Arrivals CSV
 * Extra
     * Handle mock "other" not departed/arrived and not cancelled.
+    * Columns (optional)
+        * Codeshare
+        * Origin IataRef
+        * Departure IataRef
+        * Airline IataRef
 * Create Package
     * Deploy sample Package
     * Tidy code
