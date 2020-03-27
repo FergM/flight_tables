@@ -18,7 +18,7 @@ def csv_to_df(file_name):
 if __name__=="__main__":
     iso_date_str = "2020-03-20"
     direction = "departures"
-    file_name = "heathrow_data.csv"
+    file_name = f"heathrow_{direction}_{iso_date_str}.csv"
 
     heathrow_data = fetch_heathrow_data(iso_date_str, direction)
     heathrow_df = dict_to_dataframe(heathrow_data)
