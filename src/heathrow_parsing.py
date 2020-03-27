@@ -11,6 +11,7 @@ class Flight(object):
         self.actual_datetime = None
         self.delay_mins = None
         self.status = None
+        self.code_share_type = None
 
         self.parse_heathrow_flight(raw_flight)
         self.delay_mins = self.calculate_delay_minutes(self.scheduled_datetime, self.actual_datetime)
@@ -48,6 +49,10 @@ class Flight(object):
             self.actual_datetime = datetime.strptime(actual_time_str[:-8], "%Y-%m-%dT%H:%M")
         else:
             self.status = f"Unexpected Status: {status}" # ToDo: Handle this better?
+
+        # Assign code_share_type
+        self.code_share_type = raw_flight["codeShareType"]
+
         return None
 
     @staticmethod
@@ -59,12 +64,12 @@ class Flight(object):
             return delay_mins
 
     def to_list(self):
-        flight_info = [self.flight_id, self.scheduled_datetime, self.actual_datetime, self.delay_mins, self.status]
+        flight_info = [self.flight_id, self.scheduled_datetime, self.actual_datetime, self.delay_mins, self.status, self.code_share_type]
         return flight_info
 
     @staticmethod
     def labels():
-        return ["flight_id", "scheduled_datetime", "actual_datetime", "delay_mins", "status"]
+        return ["flight_id", "scheduled_datetime", "actual_datetime", "delay_mins", "status", "code_share"]
 
 class ParsedFlights(object):
 
