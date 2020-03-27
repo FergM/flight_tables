@@ -1,31 +1,42 @@
 # FlightTimes
 
-Code to analyse flight arrivals and departures data.  
-
-Current version is for Heathrow Airport only.  
+Fetch Heathrow Arrivals/Departures Data and save to CSV.
 
 ## Instructions
-Instructions for saving data from one day's departures to csv. This will only work for recent dates because data is fetched from heathrow's website.
+Data is saved to your working directory. You will be asked to confirm before saving.
 
-#### CSV Format
+It will only work for recent dates because data is fetched from Heathrow's website.  
+
+### CSV Format
 The csv output currently has these column names, in addition to the index column:
 * flight_id	
 * scheduled_datetime	
 * departure_datetime	
 * delay_mins
-
-### Save Departures as CSV
+* status
 
 #### Basic Example
 Run the following in command line:
 ```
 python src/heathrow_flight_tables.py
 ```
-This will output `heathrow_departures_2020-03-25.csv`, a file which contains all departures for March 25th.
+This will output `heathrow_arrivals_yyyy-mm-dd.csv`, a file which contains all arrivals for yesterday.
 
-#### Request your own Date
-* From `heathrow_flight_tables.py` import `HeathrowFlightTables`.
-* You can then execute ```HeathrowFlightTables.departures_csv("2020-03-25")``` to save a csv for the specified date.
+#### Command line Execution
+        * `python src/heathrow_flight_tables.py yyyy-mm-dd direction`
+        * where `direction` is one of:
+            * arrivals
+            * departures
+   
+#### Python Execution
+* From `src/heathrow_fligh_tables.py` import `HeathrowFlightTables`:
+        ```         
+           # Save Arrivals CSV
+           HeathrowFlightTables.arrivals_csv("yyyy-mm-dd")
+           
+           # Save Departures csv
+           HeathrowFlightTables.departures_csv("yyyy-mm-dd")
+        ```
 
 ## Motivation:
 The initial motivation was around analysing flight punctuality. When you google for this most results are not detailed enough to compare one flight IDs against another. One use case for this tool is to find airlines/flight times which are less delayed.
