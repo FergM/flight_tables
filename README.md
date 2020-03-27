@@ -25,7 +25,7 @@ python src/heathrow_flight_tables.py yyyy-mm-dd departures
 ```  
    
 #### Python Execution
-* From `src/heathrow_fligh_tables.py` import `HeathrowFlightTables`:  
+Import `HeathrowFlightTables` from `src/heathrow_fligh_tables.py`, then:  
 ```         
 # Save Arrivals CSV
 HeathrowFlightTables.arrivals_csv("yyyy-mm-dd")
