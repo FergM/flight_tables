@@ -1,6 +1,5 @@
 # FlightTimes
 
-**TLDR:**  
 Fetch Heathrow Arrivals/Departures Data and save to CSV. 
 * One day at a time.
 * One Direction at a time (arrivals or departures)
