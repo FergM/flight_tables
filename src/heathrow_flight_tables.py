@@ -1,7 +1,9 @@
+import pandas as pd
+import sys
+
+from dataframe_to_csv import df_to_csv
 from date_to_dict import fetch_heathrow_data
 from dict_to_dataframe import dict_to_dataframe
-from dataframe_to_csv import df_to_csv
-import pandas as pd
 
 class HeathrowFlightTables(object):
     @classmethod
@@ -27,7 +29,26 @@ class HeathrowFlightTables(object):
         return df
 
 if __name__=="__main__":
-    #from heathrow_flight_tables import HeathrowFlightTables
     print("start")
-    HeathrowFlightTables.arrivals_csv("2020-03-26")
-    print("end")
+
+    direction = "arrivals" #Assume arrivals unless specified later as an argument.
+
+    print(sys.argv)
+    if len(sys.argv) == 1:
+        date_str = "2020-03-26"
+        print(f"Direction not specified. Assume: {direction}")
+    elif len(sys.argv) == 2:
+        date_str = sys.argv[1]
+    elif len(sys.argv) == 3:
+        date_str = sys.argv[1]
+        direction = sys.argv[2]
+    else:
+        Print("Too Many Arguments. You can include 'yyyy-mm-dd' and 'arrivals' or 'departures' as second and third arguments.")
+        sys.exit(f"Too Many Arguments. Expected 2 or less, received {len(sys.argv)}.")
+
+    if direction=="arrivals":
+        HeathrowFlightTables.arrivals_csv(date_str)
+    if direction=="departures":
+        HeathrowFlightTables.departures_csv(date_str)
+
+    print("End")
