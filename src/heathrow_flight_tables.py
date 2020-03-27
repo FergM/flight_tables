@@ -29,5 +29,5 @@ class HeathrowFlightTables(object):
 if __name__=="__main__":
     #from heathrow_flight_tables import HeathrowFlightTables
     print("start")
-    HeathrowFlightTables.departures_csv("2020-03-25")
+    HeathrowFlightTables.arrivals_csv("2020-03-26")
     print("end")

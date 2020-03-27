@@ -26,27 +26,27 @@ class TestFlight(unittest.TestCase):
 
         #A Proper Delay
         scheduled_datetime = datetime(2020,2,2,7,30)
-        departure_datetime = datetime(2020,2,2,8,30)
-        delay_mins = Flight.calculate_delay_minutes(scheduled_datetime, departure_datetime)
+        actual_datetime = datetime(2020,2,2,8,30)
+        delay_mins = Flight.calculate_delay_minutes(scheduled_datetime, actual_datetime)
         self.assertEqual(delay_mins, 60)
 
         #An Early Flight
         scheduled_datetime = datetime(2020,2,2,7,30)
-        departure_datetime = datetime(2020,2,2,6,30)
-        delay_mins = flight.calculate_delay_minutes(scheduled_datetime, departure_datetime)
+        actual_datetime = datetime(2020,2,2,6,30)
+        delay_mins = flight.calculate_delay_minutes(scheduled_datetime, actual_datetime)
         self.assertEqual(delay_mins, -60)
 
         #Flight with None as an input
-        departure_datetime = None
+        actual_datetime = None
         scheduled_datetime = datetime(2020,2,2,8,30)
-        delay_mins = flight.calculate_delay_minutes(scheduled_datetime, departure_datetime)
+        delay_mins = flight.calculate_delay_minutes(scheduled_datetime, actual_datetime)
         self.assertEqual(delay_mins, None)
 
     def test_the_init(self):
         flight = Flight(self.raw_flight)
         self.assertIsInstance(flight.flight_id, str) #ToDO: assert regex string length >=0 with no whitespace.
         self.assertIsInstance(flight.scheduled_datetime, datetime)
-        self.assertIsInstance(flight.departure_datetime, datetime)#Note: will return None and fail in some cases. 
+        self.assertIsInstance(flight.actual_datetime, datetime)#Note: will return None and fail in some cases. 
         self.assertIn(type(flight.delay_mins), (float, type(None)))
 
     def test_to_list(self):

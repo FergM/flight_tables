@@ -8,45 +8,63 @@ class Flight(object):
     def __init__(self, raw_flight):
         self.flight_id = None
         self.scheduled_datetime = None
-        self.departure_datetime = None
+        self.actual_datetime = None
         self.delay_mins = None
         self.status = None
 
         self.parse_heathrow_flight(raw_flight)
-        self.delay_mins = self.calculate_delay_minutes(self.scheduled_datetime, self.departure_datetime)
+        self.delay_mins = self.calculate_delay_minutes(self.scheduled_datetime, self.actual_datetime)
 
     def parse_heathrow_flight(self, raw_flight):
         #Add more parsing to get times as datetime format & remove whitespace from flightId
+        #Try accept is alternative to specifying arrival/departure in the input.
+        #    Might make more sense to tell catch case where data is for departure but should be for arrival.
         assert type(raw_flight) == dict
         self.flight_id = raw_flight['flightIdentifier']
-        scheduled_time_str = raw_flight['origin']['scheduledDateTime']['local']
+
+        # Get Status and Location
+        try:
+            status = raw_flight['origin']['status']['messages']['message'][0]['text']
+            location = 'origin'
+        except:
+            status = raw_flight['destination']['status']['messages']['message'][0]['text']
+            location = 'destination'
+
+        # Get Scheduled Time
+        scheduled_time_str = raw_flight[location]['scheduledDateTime']['local']
         self.scheduled_datetime = datetime.strptime(scheduled_time_str[:-7], "%Y-%m-%dT%H:%M")
-        status = raw_flight['origin']['status']['messages']['message'][0]['text']
-        if status == "Departed":
-            self.status = "Departed"
-            departure_time_str = raw_flight['origin']['status']['messages']['message'][0]['data']
-            departure_datetime_str = raw_flight['origin']['status']['statusTime']
-            if departure_time_str == departure_datetime_str[11:-8]:
-                self.departure_datetime = datetime.strptime(departure_datetime_str[:-8], "%Y-%m-%dT%H:%M")
+
+        # Assign Status
+        self.status = status
+
+        # Assign Actual Time
         if status == "Cancelled":
             self.status = "Cancelled"
+        elif (status == "Departed") or (status=="Landed"):
+            actual_time_str = raw_flight[location]['status']['statusTime']
+            actual_date_str = raw_flight[location]['status']['messages']['message'][0]['data'][:-13]
+            actual_datetime_str = actual_date_str + actual_time_str
+            #assert actual_date_str == actual_time_str[11:-8], f"{actual_date_str} == {actual_time_str[11:-8]} Failed. \n {raw_flight}" # ToDo: handle this better?
+            self.actual_datetime = datetime.strptime(actual_time_str[:-8], "%Y-%m-%dT%H:%M")
+        else:
+            self.status = f"Unexpected Status: {status}" # ToDo: Handle this better?
         return None
 
     @staticmethod
-    def calculate_delay_minutes(scheduled_datetime, departure_datetime):
-        if None in (scheduled_datetime, departure_datetime):
+    def calculate_delay_minutes(scheduled_datetime, actual_datetime):
+        if None in (scheduled_datetime, actual_datetime):
             return None
         else:
-            delay_mins = (departure_datetime - scheduled_datetime).total_seconds() / 60
+            delay_mins = (actual_datetime - scheduled_datetime).total_seconds() / 60
             return delay_mins
 
     def to_list(self):
-        flight_info = [self.flight_id, self.scheduled_datetime, self.departure_datetime, self.delay_mins, self.status]
+        flight_info = [self.flight_id, self.scheduled_datetime, self.actual_datetime, self.delay_mins, self.status]
         return flight_info
 
     @staticmethod
     def labels():
-        return ["flight_id", "scheduled_datetime", "departure_datetime", "delay_mins", "status"]
+        return ["flight_id", "scheduled_datetime", "actual_datetime", "delay_mins", "status"]
 
 class ParsedFlights(object):
 
@@ -73,8 +91,8 @@ if __name__ == '__main__':
 
     print("\n--------------------Debugging for unittest of Departure/Scheduled Time")
     flight = Flight(raw_flights[0])
-    print("Scheduled:", flight.scheduled_datetime, "\nDeparture:", flight.departure_datetime)
-    print("Scheduled datatype:", type(flight.scheduled_datetime), "\nDeparture datatype:", type(flight.departure_datetime))
+    print("Scheduled:", flight.scheduled_datetime, "\nDeparture:", flight.actual_datetime)
+    print("Scheduled datatype:", type(flight.scheduled_datetime), "\nDeparture datatype:", type(flight.actual_datetime))
 
     print("\n--------------------Here's the LATEST, it's all coming together in a dataframe")
     parsed_flights = ParsedFlights(raw_flights)
