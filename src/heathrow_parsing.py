@@ -10,6 +10,7 @@ class Flight(object):
         self.scheduled_datetime = None
         self.departure_datetime = None
         self.delay_mins = None
+        self.status = None
 
         self.parse_heathrow_flight(raw_flight)
         self.delay_mins = self.calculate_delay_minutes(self.scheduled_datetime, self.departure_datetime)
@@ -22,10 +23,13 @@ class Flight(object):
         self.scheduled_datetime = datetime.strptime(scheduled_time_str[:-7], "%Y-%m-%dT%H:%M")
         status = raw_flight['origin']['status']['messages']['message'][0]['text']
         if status == "Departed":
+            self.status = "Departed"
             departure_time_str = raw_flight['origin']['status']['messages']['message'][0]['data']
             departure_datetime_str = raw_flight['origin']['status']['statusTime']
             if departure_time_str == departure_datetime_str[11:-8]:
                 self.departure_datetime = datetime.strptime(departure_datetime_str[:-8], "%Y-%m-%dT%H:%M")
+        if status == "Cancelled":
+            self.status = "Cancelled"
         return None
 
     @staticmethod
@@ -37,12 +41,12 @@ class Flight(object):
             return delay_mins
 
     def to_list(self):
-        flight_info = [self.flight_id, self.scheduled_datetime, self.departure_datetime, self.delay_mins]
+        flight_info = [self.flight_id, self.scheduled_datetime, self.departure_datetime, self.delay_mins, self.status]
         return flight_info
 
     @staticmethod
     def labels():
-        return ["flight_id", "scheduled_datetime", "departure_datetime", "delay_mins"]
+        return ["flight_id", "scheduled_datetime", "departure_datetime", "delay_mins", "status"]
 
 class ParsedFlights(object):
 
