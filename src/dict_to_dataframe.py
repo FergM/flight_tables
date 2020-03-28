@@ -9,7 +9,7 @@ def dict_to_dataframe(heathrow_data):
 
     heathrow_df = pd.DataFrame()
 
-	raw_flights = heathrow_data['flightSummaryList']['flight']
+raw_flights = heathrow_data['flightSummaryList']['flight']
 
     #Parse Flights
     parsed_flights = ParsedFlights(raw_flights)
