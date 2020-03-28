@@ -1,9 +1,10 @@
 __pycache__/
 
 # Data Files
-*.json
 *.csv
+*.json
 *.p    # pickles
+*.xlsx
 
 # Environments
 env/
