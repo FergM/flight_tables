@@ -1,3 +1,22 @@
+# Next steps (rough)
+* Reorder columns so they are more logical
+* Decide whether/which fields to rename to be more logical
+* Switch ACCEPT to y/Y confimation like in bash `rm -i`
+* Figure out if better way to call from command line:
+    * less time waiting to load
+    * bash style `--help` and clarity about optional options.
+* More thorough validation
+    * review tests
+    * integration test
+    * add that test which would have caught c74b7d1 bug (see below)
+* Tidy all the data files hanging around (can prob delete them)
+* PRIORITY: Tidy code structure & remove unneeded code
+    * One group for GenericFlights
+    * One group for HeathrowParsing (extra)
+    * One group for DateToCSV
+        * Allow .json to CSV (extra)
+ 
+
 # Validating this approach
 * Is it ok to keep adding columns like this?
     * Consider clearer labelling / replace labels in codeshare column with simpler. 
