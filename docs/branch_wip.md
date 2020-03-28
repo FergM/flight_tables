@@ -16,6 +16,17 @@
     * One group for DateToCSV
         * Allow .json to CSV (extra)
  
+# Extras
+Parsing should have function to choose from source or from json
+
+# Toolkit Ideas
+def load_json_file(full_file_name):
+	with open(full_file_name) as json_file:
+		py_obj = json.load(json_file)
+	return py_obj
+
+def df_to_csv: #IFF filename doesn't exist
+	test whether this is really needed or happens anyways...
 
 # Validating this approach
 * Is it ok to keep adding columns like this?

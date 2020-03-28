@@ -3,6 +3,7 @@ from dict_to_dataframe import dict_to_dataframe
 import pandas as pd
 
 def df_to_csv(df, file_name):
+    """Only save if file doesn't exist."""
     try:
         with open( file_name, "x" ) as f:
             df.to_csv(file_name)
