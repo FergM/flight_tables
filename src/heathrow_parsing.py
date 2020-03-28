@@ -1,5 +1,5 @@
 from datetime import datetime
-from heathrow_extraction import load_data, extract_flight_list
+from heathrow_extraction import load_data
 import numpy as np
 import pandas as pd
 
@@ -96,7 +96,7 @@ class ParsedFlights(object):
 if __name__ == '__main__':
     full_file_name = "../data/heathrow_data/2020-02-02Z.json"
     raw_data = load_data(full_file_name)
-    raw_flights = extract_flight_list(raw_data)
+	raw_flights = raw_data['flightSummaryList']['flight']
     print("\nHere's the PAYLOAD from the first flight in `raw_data`: \n", raw_flights[0])
 
     print("\n--------------------Debugging for unittest of Departure/Scheduled Time")

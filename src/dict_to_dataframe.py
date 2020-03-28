@@ -2,7 +2,7 @@ from os import listdir
 import pandas as pd
 import pickle
 
-from heathrow_extraction import load_data, extract_flight_list
+from heathrow_extraction import load_data
 from heathrow_parsing import ParsedFlights
 from date_to_dict import fetch_heathrow_data
 
@@ -10,7 +10,7 @@ def dict_to_dataframe(heathrow_data):
 
     heathrow_df = pd.DataFrame()
 
-    raw_flights = extract_flight_list(heathrow_data)
+	raw_flights = heathrow_data['flightSummaryList']['flight']
 
     #Parse Flights
     parsed_flights = ParsedFlights(raw_flights)

@@ -2,7 +2,7 @@ from os import listdir
 import pandas as pd
 import pickle
 
-from heathrow_extraction import load_data, extract_flight_list
+from heathrow_extraction import load_data
 from heathrow_parsing import ParsedFlights
 
 heathrow_df = pd.DataFrame()
@@ -20,7 +20,7 @@ for file in filenames:
 
     #Extract Raw Data
     raw_data = load_data(path)
-    raw_flights = extract_flight_list(raw_data)
+   	raw_flights = raw_data['flightSummaryList']['flight']
     #Parse Flights
     parsed_flights = ParsedFlights(raw_flights)
     flights_df = parsed_flights.to_dataframe()
