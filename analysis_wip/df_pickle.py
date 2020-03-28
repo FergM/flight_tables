@@ -24,7 +24,7 @@ for file in filenames:
 
     #Extract Raw Data
     raw_data = load_json_file(path)
-   	raw_flights = raw_data['flightSummaryList']['flight']
+    raw_flights = raw_data['flightSummaryList']['flight']
     #Parse Flights
     parsed_flights = ParsedFlights(raw_flights)
     flights_df = parsed_flights.to_dataframe()
