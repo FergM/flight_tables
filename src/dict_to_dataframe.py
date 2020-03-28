@@ -2,7 +2,6 @@ from os import listdir
 import pandas as pd
 import pickle
 
-from heathrow_extraction import load_data
 from heathrow_parsing import ParsedFlights
 from date_to_dict import fetch_heathrow_data
 
