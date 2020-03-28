@@ -41,6 +41,9 @@ The output is a csv these column names; in addition to the index column:
 * departure_datetime
 * delay_mins
 * status
+* code_share
+* origin
+* destination
 
 ## Motivation:
 The initial motivation was around analysing flight punctuality. When you google for this most results are not detailed enough to compare one flight IDs against another. One use case for this tool is to find airlines/flight times which are less delayed.
