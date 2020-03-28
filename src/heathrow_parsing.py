@@ -12,6 +12,8 @@ class Flight(object):
         self.delay_mins = None
         self.status = None
         self.code_share_type = None
+        self.origin = None
+        self.destination = None
 
         self.parse_heathrow_flight(raw_flight)
         self.delay_mins = self.calculate_delay_minutes(self.scheduled_datetime, self.actual_datetime)
@@ -22,6 +24,10 @@ class Flight(object):
         #    Might make more sense to tell catch case where data is for departure but should be for arrival.
         assert type(raw_flight) == dict
         self.flight_id = raw_flight['flightIdentifier']
+
+        # Get Origin and Destination
+        self.origin = raw_flight['origin']['airportIataRef']
+        self.destination = raw_flight['destination']['airportIataRef']
 
         # Get Status and Location
         try:
@@ -64,12 +70,12 @@ class Flight(object):
             return delay_mins
 
     def to_list(self):
-        flight_info = [self.flight_id, self.scheduled_datetime, self.actual_datetime, self.delay_mins, self.status, self.code_share_type]
+        flight_info = [self.flight_id, self.scheduled_datetime, self.actual_datetime, self.delay_mins, self.status, self.code_share_type, self.origin, self.destination]
         return flight_info
 
     @staticmethod
     def labels():
-        return ["flight_id", "scheduled_datetime", "actual_datetime", "delay_mins", "status", "code_share"]
+        return ["flight_id", "scheduled_datetime", "actual_datetime", "delay_mins", "status", "code_share", "origin", "destination"]
 
 class ParsedFlights(object):
 
