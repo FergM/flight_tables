@@ -48,11 +48,10 @@ class Flight(object):
         if status == "Cancelled":
             self.status = "Cancelled"
         elif (status == "Departed") or (status=="Landed"):
-            actual_time_str = raw_flight[location]['status']['statusTime']
-            actual_date_str = raw_flight[location]['status']['messages']['message'][0]['data'][:-13]
+            actual_date_str = raw_flight[location]['status']['statusTime'][0:11]
+            actual_time_str = raw_flight[location]['status']['messages']['message'][0]['data']
             actual_datetime_str = actual_date_str + actual_time_str
-            #assert actual_date_str == actual_time_str[11:-8], f"{actual_date_str} == {actual_time_str[11:-8]} Failed. \n {raw_flight}" # ToDo: handle this better?
-            self.actual_datetime = datetime.strptime(actual_time_str[:-8], "%Y-%m-%dT%H:%M")
+            self.actual_datetime = datetime.strptime(actual_datetime_str, "%Y-%m-%dT%H:%M")
         else:
             self.status = f"Unexpected Status: {status}" # ToDo: Handle this better?
 
