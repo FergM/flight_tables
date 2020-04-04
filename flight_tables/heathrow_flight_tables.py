@@ -4,7 +4,8 @@ import sys
 
 from dataframe_to_csv import df_to_csv
 from date_to_dict import fetch_heathrow_data
-from dict_to_dataframe import dict_to_dataframe
+from heathrow_parsing import extract_batch_heathrow
+from flight_parsing import ParsedFlights
 
 class HeathrowFlightTables(object):
     @classmethod
@@ -18,9 +19,15 @@ class HeathrowFlightTables(object):
     @staticmethod
     def date_to_csv(iso_date_str, direction):
         file_name = f"heathrow_{direction}_{iso_date_str}.csv"
+
         heathrow_raw_dict = fetch_heathrow_data(iso_date_str, direction)
-        #heathrow_payload_dict = heathrow_raw_dict['flightSummaryList']['flight']
-        heathrow_df = dict_to_dataframe(heathrow_raw_dict)
+
+        batch_info = extract_batch_heathrow(heathrow_raw_dict)
+
+        parsed_flights = ParsedFlights(batch_info)
+
+        heathrow_df = parsed_flights.to_dataframe()
+
         df_to_csv(heathrow_df, file_name)
 
     @staticmethod

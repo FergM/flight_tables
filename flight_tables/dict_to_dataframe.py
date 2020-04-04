@@ -2,14 +2,16 @@ from os import listdir
 import pandas as pd
 import pickle
 
-from heathrow_parsing import ParsedFlights
 from date_to_dict import fetch_heathrow_data
+from flight_parsing import ParsedFlights
+from heathrow_parsing import heathrow_flight_extractor
 
 def dict_to_dataframe(heathrow_data):
 
     heathrow_df = pd.DataFrame()
 
     raw_flights = heathrow_data['flightSummaryList']['flight']
+    
 
     #Parse Flights
     parsed_flights = ParsedFlights(raw_flights)
