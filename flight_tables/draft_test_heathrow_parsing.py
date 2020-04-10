@@ -15,32 +15,18 @@ class SampleData(object):
 
 class TestFlight(unittest.TestCase):
     """Test the class called Flight"""
+    #Input: raw_flight
+    #Output:
+    #   flight_id (str): 
+    #   origin (str): Airport Code
+    #   destination (str): Airport Code
+    #   status (str): Departed, Landed or Cancelled
+    #   scheduled_datetime (datetime): Naive datetime
+    #   actual_datetime (datetime): Naive datetime
+    #   code_share_type (str): main_code, alt_code or only_code
 
     def setUp(self):
         self.raw_flight = SampleData().test_flight_departed_1
-
-    def test_delay_calculation(self):
-        #Instantiate the class
-        #   to access delay calc function
-        flight = Flight(self.raw_flight)
-
-        #A Proper Delay
-        scheduled_datetime = datetime(2020,2,2,7,30)
-        actual_datetime = datetime(2020,2,2,8,30)
-        delay_mins = Flight.calculate_delay_minutes(scheduled_datetime, actual_datetime)
-        self.assertEqual(delay_mins, 60)
-
-        #An Early Flight
-        scheduled_datetime = datetime(2020,2,2,7,30)
-        actual_datetime = datetime(2020,2,2,6,30)
-        delay_mins = flight.calculate_delay_minutes(scheduled_datetime, actual_datetime)
-        self.assertEqual(delay_mins, -60)
-
-        #Flight with None as an input
-        actual_datetime = None
-        scheduled_datetime = datetime(2020,2,2,8,30)
-        delay_mins = flight.calculate_delay_minutes(scheduled_datetime, actual_datetime)
-        self.assertEqual(delay_mins, None)
 
     def test_the_init(self):
         flight = Flight(self.raw_flight)
@@ -50,27 +36,6 @@ class TestFlight(unittest.TestCase):
         self.assertIn(type(flight.delay_mins), (float, type(None)))
 
     def test_to_list(self):
-        flight = Flight(self.raw_flight)
-        self.assertIsInstance(flight.to_list(), list)
-        self.assertEqual(len(flight.to_list()), len(flight.labels()))
-
-class TestParsedFlights(unittest.TestCase):
-    def setUp(self):
-        self.raw_flights = SampleData().three_flights_one_cancelled()
-        
-    def test_the_init(self):
-        parsed_flights = ParsedFlights(self.raw_flights)
-        self.assertEqual(len(parsed_flights.parsed_flights), len(self.raw_flights))
-        #Check parsed_flights have the right class (the user defined Flight class)
-        #   For brevity, just check the first parsed_flight .
-        self.assertEqual(str(type(parsed_flights.parsed_flights[0])), "<class 'heathrow_parsing.Flight'>")
-
-    def test_to_dataframe(self):
-        parsed_flights = ParsedFlights(self.raw_flights)
-        flight_df = parsed_flights.to_dataframe()
-        self.assertEqual(len(flight_df), len(self.raw_flights))
-        self.assertEqual(list(flight_df.columns), Flight.labels())
-        #print(flight_df.head())
 
 if __name__ == '__main__':
    unittest.main()

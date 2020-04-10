@@ -44,8 +44,6 @@ Saves csv table of arrivals data on selected date to working directory.
 
 # Dependencies
 * from heathrow_parsing import `ParsedFlights`
-* from heathrow_extraction import extract_flight_list # load_data
-    * Can be removed it's a oneliner
 
 # Test Scripts
 test_*.py

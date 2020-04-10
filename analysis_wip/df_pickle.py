@@ -2,8 +2,12 @@ from os import listdir
 import pandas as pd
 import pickle
 
-from heathrow_extraction import load_data, extract_flight_list
 from heathrow_parsing import ParsedFlights
+
+def load_json_file(full_file_name):
+    with open(full_file_name) as json_file:
+        py_obj = json.load(json_file)
+    return py_obj
 
 heathrow_df = pd.DataFrame()
 print("\nempty df is:", heathrow_df)
@@ -19,8 +23,8 @@ for file in filenames:
     path = dir_path + file
 
     #Extract Raw Data
-    raw_data = load_data(path)
-    raw_flights = extract_flight_list(raw_data)
+    raw_data = load_json_file(path)
+    raw_flights = raw_data['flightSummaryList']['flight']
     #Parse Flights
     parsed_flights = ParsedFlights(raw_flights)
     flights_df = parsed_flights.to_dataframe()

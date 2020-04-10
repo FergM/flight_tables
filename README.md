@@ -1,32 +1,21 @@
-# FlightTimes
+# Flight Tables: Arrivals and Departures Parsing Toolkit
+## What is It?
 
-Fetch Heathrow Arrivals/Departures Data and save to CSV. 
-* One day at a time.
-* One Direction at a time (arrivals or departures)
+**Flight Tables** lets you save public Arrivals and Departures infomation to a standardised csv file.  
 
-Data is saved to your working directory. You will be asked to confirm before saving.
-
-It will only work for recent dates because data is fetched from Heathrow's website.  
+Current version is for Heathrow Airport.
 
 ## Instructions
+Install:
+```
+$ pip install FlightTables
+```
+Save CSV Files:
+* Files are saved to your working directory. 
 
-#### Basic Example
-Run the following in command line:
-```
-python src/heathrow_flight_tables.py
-```
-This will output `heathrow_arrivals_yyyy-mm-dd.csv`, a file which contains all arrivals for yesterday.
-
-#### Command line Execution
-* First argument is date you want
-* Second argument is `departures` or `arrivals`
-```
-python src/heathrow_flight_tables.py yyyy-mm-dd departures
-```  
-   
-#### Python Execution
-Import `HeathrowFlightTables` from `src/heathrow_fligh_tables.py`, then:  
 ```         
+from `FlightTables` import arrivals_csv, departures_csv
+
 # Save Arrivals CSV
 HeathrowFlightTables.arrivals_csv("yyyy-mm-dd")
 
@@ -34,16 +23,15 @@ HeathrowFlightTables.arrivals_csv("yyyy-mm-dd")
 HeathrowFlightTables.departures_csv("yyyy-mm-dd")
 ```
 
-## Output Format
-The output is a csv these column names; in addition to the index column:
-* flight_id
-* scheduled_datetime
-* departure_datetime
-* delay_mins
-* status
-* code_share
-* origin
-* destination
+## CSV Output Format
+The output is a csv with these columns:
 
-## Motivation:
-The initial motivation was around analysing flight punctuality. When you google for this most results are not detailed enough to compare one flight IDs against another. One use case for this tool is to find airlines/flight times which are less delayed.
+| flight_id | origin | destination |   status  | scheduled_datetime |  actual_datetime | delay_mins | code_share |
+|:---------:|:------:|:-----------:|:---------:|:------------------:|:----------------:|:----------:|:----------:|
+|   BA028   |   HKG  |     LHR     |   Landed  |  03/04/2020 05:30  | 03/04/2020 05:39 |      9     |     No     |
+|   VA5341  |   HKG  |     LHR     |   Landed  |  03/04/2020 05:30  | 03/04/2020 05:29 |     -1     |  Alt-Code  |
+|   BA064   |   NBO  |     LHR     | Cancelled |  03/04/2020 06:20  |                  |            |  Main-Code |
+|    ...    |        |             |           |                    |                  |            |            |
+
+## Background:
+The initial motivation was to analyse flight punctuality. When you google for this most results are not detailed enough to compare one flight ID against another.
