@@ -1,9 +1,7 @@
 from datetime import datetime
-from flight_parsing import Flight, ParsedFlights
-from heathrow_parsing import extract_flight_heathrow, extract_batch_heathrow
-import json
 import unittest
-import pprint
+
+from flight_parsing import Flight, ParsedFlights
 
 class SampleData(object):
     
