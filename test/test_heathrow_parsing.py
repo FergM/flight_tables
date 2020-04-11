@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 import json
 import unittest
 
-from heathrow_parsing import extract_batch_heathrow, extract_flight_heathrow, fetch_heathrow_data
+from flight_tables.heathrow_parsing import extract_batch_heathrow, extract_flight_heathrow, fetch_heathrow_data
 
 class SampleData(object):
     
