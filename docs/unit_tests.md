@@ -1,6 +1,12 @@
 # About The Tests
 ## Location
 * `test/`
+## Contents
+* `test_flight_parsing.py`
+    * Test core parsing code.
+* `test_heathrow_parsing`
+    * Test heathrow specific parsing logic.
+
 ## How to Run
 Go to folder above test folder:
 ```

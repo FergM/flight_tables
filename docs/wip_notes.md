@@ -1,182 +1,94 @@
-# CSV Pipeline
-* date -> json
-* json -> dataframe
-* dataframe -> csv
+# WIP Notes
+Notes about work in progress and possible improvements.
 
-## Implementation
-fetch_heathrow_data
-* date=>dict  
+# Future Development Ideas
+* Resolve known bugs
+* Parsing option to choose API or json source
+* Table Columns: check if there's a neater way to add new ones.
 
-dict_to_dataframe
-* dict=>df   
+# Manual Validation of CSV Table
+## Part 1: finding Duplicates
+* filter by actual time
+    * If actual time & scheduled time & origin/destination are the same, flag this.
+* add origin and destination airport to help find if there's any true duplicates.
 
-df_to_csv
-* df=>csv
+## Part 2
+* Basically, split into Marketing, Operating and Normal
+    * Cross check using vlookup on origin, from and to time
+* check1: check cancelled don't duplicate (order by scheduled)
+* check2: check landed don't duplicate (order by landed time)
+* check3: check codeshares marketing all have a match vlookup from marketing flights to non marketing flights.
+* check4: Reverse check that flights in today's Normal aren't elsewhere and Operating is mapped once to Codeshare at least.
 
-# CSV Callables
-* TabulateDepartures(iso_date_str)
-* TabulateArrivals(iso_date_str)
-* OR
-* HeathrowFlightTables.arrivals_csv(iso_date_str)
-* HeathrowFlightTables.departures_csv(iso_date_str)
-"""
-Saves csv table of arrivals data on selected date to working directory.
-    Inputs: iso_date_str, the yyyy-mm-dd date you want to get data for
-    Output: file_path = path to file which was saved. Returns "No Data for this Date" if not found.
-"""
+# Known Bugs
+*  Day Overlap Bug: 
+    * **Summary**: Date could be wrong if data overlaps two days.
+    * Heathrow
+    * Status time is past midnight but flight landed on day intended
+    * Landing date will be wrong
 
-## Cases to Solve
-* Cancelled departures (TDD)
-* Validate Departures CSV
-* Arrivals  (TDD)
-* Validate Arrivals CSV
-* Extra
-    * Handle mock "other" not departed/arrived and not cancelled.
-    * Columns (optional)
-        * Codeshare
-        * Origin IataRef
-        * Departure IataRef
-        * Airline IataRef
-* Create Package
-    * Deploy sample Package
-    * Tidy code
-    * Deploy package
-
-# Dependencies
-* from heathrow_parsing import `ParsedFlights`
-
-# Test Scripts
-test_*.py
-dataframe_to_csv.py
-
-# Example Flights
-## Cancelled Departures
-{
-   "flightIdentifier":"DL4339",
-   "flightNumber":"4339",
-   "airlineIataRef":"DL",
-   "origin":{
-      "airportIataRef":"LHR",
-      "terminalCode":"3",
-      "status":{
-         "interpretedStatus":" Cancelled Contact airline",
-         "category":"INFO",
-         "messages":{
-            "message":[
-               {
-                  "text":"Cancelled"
-               },
-               {
-                  "text":"Contact airline"
-               }
-            ]
+* Returning Departures:
+    * **Summary**: Some departures return to airport in exceptional circumstances. I haven't tested handling of this.
+    * A Heathrow departure that returned to Heathrow instead of Nairobi. Shows up in heathrow arrivals payload.
+    * Origin Equals Destination
+    * 2020-03-27 flight MH004 showing status time instead of landed time
+    * Found 2020-03-28@17:15
+    * Should have a test that feeds a flight and validates each field in table is right.
+    * make test against commit c74b7d1 to ensure it fails.
+   
+   ```
+   {
+      "flightIdentifier":"BA065",
+      "icaoCallsign":"BAW65R",
+      "flightNumber":"65",
+      "airlineIataRef":"BA",
+      "origin":{
+         "airportIataRef":"LHR",
+         "terminalCode":"3",
+         "status":{
+            "interpretedStatus":" Landed 12:15  ",
+            "category":"INFO",
+            "messages":{
+               "message":[
+                  {
+                     "text":"Landed",
+                     "data":"12:15"
+                  },
+                  {
+                     "text":" "
+                  }
+               ]
+            },
+            "code":"LD",
+            "statusTime":"2020-03-27T12:15:24.000Z"
          },
-         "code":"CX",
-         "statusTime":"2020-03-25T07:00:00.000Z"
+         "scheduledDateTime":{
+            "utc":"2020-03-27T12:35:00.000",
+            "local":"2020-03-27T12:35:00.000",
+            "utcOffset":0
+         }
       },
-      "scheduledDateTime":{
-         "utc":"2020-03-25T07:00:00.000",
-         "local":"2020-03-25T07:00:00.000",
-         "utcOffset":0
-      }
-   },
-   "destination":{
-      "airportIataRef":"LOS"
-   },
-   "stops":{
-      "stop":[
-
-      ],
-      "count":0
-   },
-   "codeShareType":"CODESHARE_MARKETING_FLIGHT",
-   "isHadacabCancelled":true
-}
-## Arrival
-{
-   "flightIdentifier":"BA058",
-   "icaoCallsign":"BAW58",
-   "flightNumber":"58",
-   "airlineIataRef":"BA",
-   "origin":{
-      "airportIataRef":"CPT"
-   },
-   "destination":{
-      "airportIataRef":"LHR",
-      "terminalCode":"3",
-      "status":{
-         "interpretedStatus":" Landed 04:31 Bags delivered on belt 08",
-         "category":"INFO",
-         "messages":{
-            "message":[
-               {
-                  "text":"Landed",
-                  "data":"04:31"
-               },
-               {
-                  "text":"Bags delivered on belt",
-                  "data":"08"
-               }
-            ]
-         },
-         "code":"LB",
-         "statusTime":"2020-03-25T05:24:25.000Z"
+      "destination":{
+         "airportIataRef":"LHR"
       },
-      "scheduledDateTime":{
-         "utc":"2020-03-25T04:45:00.000",
-         "local":"2020-03-25T04:45:00.000",
-         "utcOffset":0
-      }
-   },
-   "stops":{
-      "stop":[
+      "stops":{
+         "stop":[
 
-      ],
-      "count":0
-   },
-   "codeShareType":"CODESHARE_OPERATING_FLIGHT",
-   "isHadacabCancelled":false
-}
-## Cancelled Arrival
-{
-   "flightIdentifier":"BA078",
-   "icaoCallsign":"BAW78",
-   "flightNumber":"78",
-   "airlineIataRef":"BA",
-   "origin":{
-      "airportIataRef":"ACC"
-   },
-   "destination":{
-      "airportIataRef":"LHR",
-      "terminalCode":"3",
-      "status":{
-         "interpretedStatus":" Cancelled Contact airline",
-         "category":"INFO",
-         "messages":{
-            "message":[
-               {
-                  "text":"Cancelled"
-               },
-               {
-                  "text":"Contact airline"
-               }
-            ]
-         },
-         "code":"CX",
-         "statusTime":"2020-03-25T05:30:00.000Z"
+         ],
+         "count":0
       },
-      "scheduledDateTime":{
-         "utc":"2020-03-25T05:30:00.000",
-         "local":"2020-03-25T05:30:00.000",
-         "utcOffset":0
-      }
-   },
-   "stops":{
-      "stop":[
-
-      ],
-      "count":0
-   },
-   "codeShareType":"CODESHARE_OPERATING_FLIGHT",
-   "isHadacabCancelled":false
-}
+      "codeShareType":"CODESHARE_OPERATING_FLIGHT",
+      "isHadacabCancelled":false
+   }
+   ```
+# Toolkit Ideas
+```
+def load_json_file(full_file_name):
+   with open(full_file_name) as json_file:
+      py_obj = json.load(json_file)
+   return py_obj
+```
+```
+def df_to_csv: #IFF filename doesn't exist
+   test whether this is really needed or happens anyways...
+```

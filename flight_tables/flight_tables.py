@@ -17,6 +17,14 @@ class FlightTables(object):
     
     @staticmethod
     def date_to_csv(iso_date_str, direction):
+        """
+        Saves csv table of data on selected date to working directory.
+            Inputs:
+                iso_date_str (str): The yyyy-mm-dd date you want to get data for
+                direction (str): "arrivals" or "departures"
+            Output:
+                CSV table saved to working directory.
+        """
         file_name = f"heathrow_{direction}_{iso_date_str}.csv"
 
         heathrow_raw_dict = fetch_heathrow_data(iso_date_str, direction)
