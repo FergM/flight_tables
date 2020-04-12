@@ -28,11 +28,7 @@ def fetch_heathrow_data(iso_date_str, direction):
         return iso_date_str
 
     def make_url(iso_date_str, direction):
-        file_path = ""#./data/heathrow_data/"
-        file_name = iso_date_str + 'Z'
-        full_file_name = file_path + file_name + ".json"
-        url_root = 'https://api-dp-prod.dp.heathrow.com/infohub/api/v1/flights/' + direction + '/inactive/'
-        url = url_root + file_name
+        url = 'https://api-dp-prod.dp.heathrow.com/infohub/api/v1/flights/' + direction + '/inactive/' + iso_date_str + 'Z'
         return url
 
     def fetch_html_soup(url_to_scrape):
