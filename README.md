@@ -8,19 +8,19 @@ Current version is for Heathrow Airport.
 ## Instructions
 Install:
 ```
-$ pip install FlightTables
+$ pip install flight_tables
 ```
 Save CSV Files:
 * Files are saved to your working directory. 
 
 ```         
-from `FlightTables` import arrivals_csv, departures_csv
+from flight_tables.flight_tables import FlightTables
 
 # Save Arrivals CSV
-HeathrowFlightTables.arrivals_csv("yyyy-mm-dd")
+FlightTables.arrivals_csv("yyyy-mm-dd")
 
 # Save Departures csv
-HeathrowFlightTables.departures_csv("yyyy-mm-dd")
+FlightTables.departures_csv("yyyy-mm-dd")
 ```
 
 ## CSV Output Format
