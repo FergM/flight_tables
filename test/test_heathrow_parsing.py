@@ -8,9 +8,9 @@ class SampleData(object):
     
     def __init__(self):
       
-        self.raw_flight_1 = json.loads(r'''{"flightIdentifier":"OS8237","flightNumber":"8237","airlineIataRef":"OS","origin":{"airportIataRef":"LHR","terminalCode":"2","status":{"interpretedStatus":" Departed 15:15  ","category":"INFO","messages":{"message":[{"text":"Departed","data":"15:15"},{"text":" "}]},"code":"AB","statusTime":"2020-01-30T15:15:00.000Z"},"scheduledDateTime":{"utc":"2020-01-30T14:30:00.000","local":"2020-01-30T14:30:00.000","utcOffset":0}},"destination":{"airportIataRef":"YYC"},"stops":{"stop":[],"count":0},"codeShareType":"CODESHARE_MARKETING_FLIGHT","isHadacabCancelled":false}''')
+        self.raw_flight_1 = json.loads(r'''{"flightIdentifier":"OS8237","flightNumber":"8237","airlineIataRef":"OS","origin":{"airportIataRef":"LHR","terminalCode":"2","status":{"interpretedStatus":" Departed 15:15  ","category":"INFO","messages":{"message":[{"text":"Departed","data":"15:15"},{"text":" "}]},"code":"AB","statusTime":"2020-01-30T15:15:00.000Z"},"scheduledDateTime":{"utc":"2020-01-30T14:30:00.000","local":"2020-01-30T14:30:00.000","utcOffset":0}},"destination":{"airportIataRef":"YYC"},"stops":{"stop":[],"count":0},"codeShareType":"CODESHARE_OPERATING_FLIGHT","isHadacabCancelled":false}''')
         self.raw_flight_2 = json.loads(r'''{"flightIdentifier":"AC6186","flightNumber":"6186","airlineIataRef":"AC","origin":{"airportIataRef":"LHR","terminalCode":"2","status":{"interpretedStatus":" Departed 06:26  ","category":"INFO","messages":{"message":[{"text":"Departed","data":"06:26"},{"text":" "}]},"code":"AB","statusTime":"2020-02-14T06:26:00.000Z"},"scheduledDateTime":{"utc":"2020-02-14T06:00:00.000","local":"2020-02-14T06:00:00.000","utcOffset":0}},"destination":{"airportIataRef":"VIE"},"stops":{"stop":[],"count":0},"codeShareType":"CODESHARE_MARKETING_FLIGHT","isHadacabCancelled":false}''')
-        self.raw_flight_3 = json.loads(r'''{"flightIdentifier":"BA7008","flightNumber":"7008","airlineIataRef":"BA","origin":{"airportIataRef":"LHR","terminalCode":"4","status":{"interpretedStatus":" Cancelled Contact airline","category":"INFO","messages":{"message":[{"text":"Cancelled"},{"text":"Contact airline"}]},"code":"CX","statusTime":"2020-01-30T15:05:00.000Z"},"scheduledDateTime":{"utc":"2020-01-30T15:05:00.000","local":"2020-01-30T15:05:00.000","utcOffset":0}},"destination":{"airportIataRef":"DOH"},"stops":{"stop":[],"count":0},"codeShareType":"CODESHARE_MARKETING_FLIGHT","isHadacabCancelled":false}''')                                    
+        self.raw_flight_3 = json.loads(r'''{"flightIdentifier":"BA7008","flightNumber":"7008","airlineIataRef":"BA","origin":{"airportIataRef":"LHR","terminalCode":"4","status":{"interpretedStatus":" Cancelled Contact airline","category":"INFO","messages":{"message":[{"text":"Cancelled"},{"text":"Contact airline"}]},"code":"CX","statusTime":"2020-01-30T15:05:00.000Z"},"scheduledDateTime":{"utc":"2020-01-30T15:05:00.000","local":"2020-01-30T15:05:00.000","utcOffset":0}},"destination":{"airportIataRef":"DOH"},"stops":{"stop":[],"count":0},"codeShareType":"NORMAL_FLIGHT","isHadacabCancelled":false}''')
         #^ 3 is a Cancelled Flight
 
         self.raw_flight_list = [self.raw_flight_1, self.raw_flight_2, self.raw_flight_3]
@@ -20,16 +20,16 @@ class SampleData(object):
         mock_response['flightSummaryList']['flight'] = self.raw_flight_list
         self.mock_response = mock_response
 
-        self.test_flight_1 =   {'actual_datetime': datetime(2020, 1, 30, 15, 15),
-                                        'code_share_type': 'CODESHARE_MARKETING_FLIGHT',
+        self.flight_info_1 =   {'actual_datetime': datetime(2020, 1, 30, 15, 15),
+                                        'code_share_type': 'main_code',
                                         'destination': 'YYC',
                                         'flight_id': 'OS8237',
                                         'origin': 'LHR',
                                         'scheduled_datetime': datetime(2020, 1, 30, 14, 30),
                                         'status': 'Departed'}
 
-        self.test_flight_2 =   {'actual_datetime': datetime(2020, 2, 14, 6, 26),
-                                        'code_share_type': 'CODESHARE_MARKETING_FLIGHT',
+        self.flight_info_2 =   {'actual_datetime': datetime(2020, 2, 14, 6, 26),
+                                        'code_share_type': 'alt_code',
                                         'destination': 'VIE',
                                         'flight_id': 'AC6186',
                                         'origin': 'LHR',
@@ -37,15 +37,15 @@ class SampleData(object):
                                         'status': 'Departed'}
 
         # A Cancelled Flight
-        self.test_flight_3 =  {'actual_datetime': None,
-                                        'code_share_type': 'CODESHARE_MARKETING_FLIGHT',
+        self.flight_info_3 =  {'actual_datetime': None,
+                                        'code_share_type': 'no_codeshare',
                                         'destination': 'DOH',
                                         'flight_id': 'BA7008',
                                         'origin': 'LHR',
                                         'scheduled_datetime': datetime(2020, 1, 30, 15, 5),
                                         'status': 'Cancelled'}
 
-        self.mock_parsed_flights = [self.test_flight_1, self.test_flight_2, self.test_flight_3]
+        self.mock_parsed_flights = [self.flight_info_1, self.flight_info_2, self.flight_info_3]
 
 class TestHeathrowFlight(unittest.TestCase):
     def setUp(self):
@@ -58,7 +58,7 @@ class TestHeathrowFlight(unittest.TestCase):
                 self.flight_validation(flight_info)
 
     def flight_validation(self, flight_info):
-        codeshare_types = ["CODESHARE_MARKETING_FLIGHT", "CODESHARE_OPERATING_FLIGHT", "NORMAL_FLIGHT"]
+        codeshare_types = ["alt_code", "main_code", "no_codeshare"]
         status_types = [ "Landed", "Departed", "Cancelled"]
         actual_datetime_types = (datetime, type(None))
         self.assertIsInstance(flight_info["scheduled_datetime"], datetime)

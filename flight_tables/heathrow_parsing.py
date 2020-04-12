@@ -95,7 +95,17 @@ def extract_flight_heathrow(raw_flight):
         flight_info["status"] = f"Unexpected Status: {status}" # ToDo: Handle this better?
 
     # Assign code_share_type
-    flight_info["code_share_type"] = raw_flight["codeShareType"]
+    def standardise_codeshare_name(old_name):
+        raw_names = ["CODESHARE_MARKETING_FLIGHT", "CODESHARE_OPERATING_FLIGHT", "NORMAL_FLIGHT"]
+        standardised_names = ["alt_code", "main_code", "no_codeshare"]
+        name_mapping = dict(zip(raw_names, standardised_names))
+
+        new_name = name_mapping[old_name]
+
+        return new_name
+
+    raw_codeshare_name = raw_flight["codeShareType"]
+    flight_info["code_share_type"] = standardise_codeshare_name(raw_codeshare_name)
 
     return flight_info
 
