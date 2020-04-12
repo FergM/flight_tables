@@ -19,7 +19,7 @@ from flight_tables.flight_tables import FlightTables
 # Save Arrivals CSV
 FlightTables.arrivals_csv("yyyy-mm-dd")
 
-# Save Departures csv
+# Save Departures CSV
 FlightTables.departures_csv("yyyy-mm-dd")
 ```
 
@@ -32,6 +32,9 @@ The output is a csv with these columns:
 |   VA5341  |   HKG  |     LHR     |   Landed  |  03/04/2020 05:30  | 03/04/2020 05:29 |     -1     |  Alt-Code  |
 |   BA064   |   NBO  |     LHR     | Cancelled |  03/04/2020 06:20  |                  |            |  Main-Code |
 |    ...    |        |             |           |                    |                  |            |            |
+
+## Test Suite
+Documentation [here](./docs/unit_tests.md)
 
 ## Background:
 The initial motivation was to analyse flight punctuality. When you google for this most results are not detailed enough to compare one flight ID against another.
