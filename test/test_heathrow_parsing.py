@@ -61,6 +61,7 @@ class TestHeathrowFlight(unittest.TestCase):
         codeshare_types = ["CODESHARE_MARKETING_FLIGHT", "CODESHARE_OPERATING_FLIGHT", "NORMAL_FLIGHT"]
         status_types = [ "Landed", "Departed", "Cancelled"]
         actual_datetime_types = (datetime, type(None))
+        self.assertIsInstance(flight_info["scheduled_datetime"], datetime)
         self.assertIsInstance(flight_info["actual_datetime"], actual_datetime_types)
         if type(flight_info["actual_datetime"]) == datetime:
             self.assertEqual(flight_info["actual_datetime"].tzinfo, None)
