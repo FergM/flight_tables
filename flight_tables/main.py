@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 import pandas as pd
 import sys
 
-from heathrow_parsing import fetch_heathrow_data, extract_batch_heathrow
-from flight_parsing import ParsedFlights
+from flight_tables.heathrow_parsing import fetch_heathrow_data, extract_batch_heathrow
+from flight_tables.flight_parsing import ParsedFlights
 
 class HeathrowFlightTables(object):
     @classmethod

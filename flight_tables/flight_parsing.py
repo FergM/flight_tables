@@ -2,8 +2,6 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 
-from heathrow_parsing import extract_batch_heathrow
-
 class Flight(object):
 
     def __init__(self, flight_info):
@@ -69,27 +67,3 @@ class ParsedFlights(object):
             data.append(row_data)
         df = pd.DataFrame(np.array(data), columns = Flight.labels())
         return df
-
-if __name__ == '__main__':
-    def load_json_file(full_file_name):
-        with open(full_file_name) as json_file:
-            py_obj = json.load(json_file)
-        return py_obj
-
-    full_file_name = "../data/heathrow_data/2020-02-02Z.json"
-    raw_data = load_json_file(full_file_name)
-    raw_flights = raw_data['flightSummaryList']['flight']
-    print("\nHere's the PAYLOAD from the first flight in `raw_data`: \n", raw_flights[0])
-
-    print("\n--------------------Debugging for unittest of Departure/Scheduled Time")
-    flight = Flight(raw_flights[0])
-    print("Scheduled:", flight.scheduled_datetime, "\nDeparture:", flight.actual_datetime)
-    print("Scheduled datatype:", type(flight.scheduled_datetime), "\nDeparture datatype:", type(flight.actual_datetime))
-
-    print("\n--------------------Here's the LATEST, it's all coming together in a dataframe")
-    parsed_flights = ParsedFlights(raw_flights)
-    flights_df = parsed_flights.to_dataframe()
-    print("There are", len(raw_flights), "flights in `raw_flights`")
-    print("There are", len(flights_df), "flights in the dataframe (`flights_df`)")
-    print("Head is:\n", flights_df.head())
-    print("Tail is:\n", flights_df.tail())

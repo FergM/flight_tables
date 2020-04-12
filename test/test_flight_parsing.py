@@ -1,7 +1,7 @@
 from datetime import datetime
 import unittest
 
-from flight_parsing import Flight, ParsedFlights
+from flight_tables.flight_parsing import Flight, ParsedFlights
 
 class SampleData(object):
     
@@ -78,7 +78,7 @@ class TestParsedFlights(unittest.TestCase):
         self.assertEqual(len(self.parsed_flights.parsed_flights), len(self.batch_info))
         #Check parsed_flights have the right class (the user defined Flight class)
         #   For brevity, just check the first parsed_flight .
-        self.assertEqual(str(type(self.parsed_flights.parsed_flights[0])), "<class 'flight_parsing.Flight'>")
+        self.assertEqual(str(type(self.parsed_flights.parsed_flights[0])), "<class 'flight_tables.flight_parsing.Flight'>")
 
     def test_to_dataframe(self):
         flight_df = self.parsed_flights.to_dataframe()
