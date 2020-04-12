@@ -1,7 +1,7 @@
 # WIP Notes
-Notes about work in progress and possible improvements.
+Notes about possible improvements, manual validation and known bugs.
 
-# Future Development Ideas
+# Improvement Ideas
 * Resolve known bugs
 * Parsing option to choose API or json source
 * Table Columns: check if there's a neater way to add new ones.
@@ -81,14 +81,3 @@ Notes about work in progress and possible improvements.
       "isHadacabCancelled":false
    }
    ```
-# Toolkit Ideas
-```
-def load_json_file(full_file_name):
-   with open(full_file_name) as json_file:
-      py_obj = json.load(json_file)
-   return py_obj
-```
-```
-def df_to_csv: #IFF filename doesn't exist
-   test whether this is really needed or happens anyways...
-```
