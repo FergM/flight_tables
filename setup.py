@@ -22,5 +22,5 @@ setuptools.setup(
         'pandas>=0.25.3',
         'requests>=2.23.0',
     ]
-    python_requires='>=3.6',
+    python_requires'>=3.6',
 )
