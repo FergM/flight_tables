@@ -1,17 +1,40 @@
-# FlightTimes (Under Construction)
+# Flight Tables: Arrivals and Departures Parsing Toolkit
+## What is It?
 
-Python3 code for flight punctuality comparison.
+**Flight Tables** lets you save public Arrivals and Departures infomation to a standardised csv file.  
 
-## Objectives:
-1. Pull first hand flight data from airport website (WIP)
-2. Collect data over time
-3. Analyse delays by airlines, route & time of day
+Current version is for Heathrow Airport.
 
-## Motivation:
+## Instructions
+Install:
+```
+$ pip install flight_tables
+```
+Save CSV Files:
+* Files are saved to your working directory. 
 
-I regularly fly to London and have noticed that Friday evening flights are often delayed.
-Ideally this tool would help me and others to find airlines/flight times which are less delayed.
+```         
+from flight_tables.flight_tables import FlightTables
 
-## Requirements:
-* requests
-* beautifulsoup4
+# Save Arrivals CSV
+FlightTables.arrivals_csv("yyyy-mm-dd")
+
+# Save Departures CSV
+FlightTables.departures_csv("yyyy-mm-dd")
+```
+
+## CSV Output Format
+The output is a csv with these columns:
+
+| flight_id | origin | destination |   status  | scheduled_datetime |  actual_datetime | delay_mins | code_share |
+|:---------:|:------:|:-----------:|:---------:|:------------------:|:----------------:|:----------:|:----------:|
+|   BA028   |   HKG  |     LHR     |   Landed  |  03/04/2020 05:30  | 03/04/2020 05:39 |      9     |     No     |
+|   VA5341  |   HKG  |     LHR     |   Landed  |  03/04/2020 05:30  | 03/04/2020 05:29 |     -1     |  Alt-Code  |
+|   BA064   |   NBO  |     LHR     | Cancelled |  03/04/2020 06:20  |                  |            |  Main-Code |
+|    ...    |        |             |           |                    |                  |            |            |
+
+## Test Suite
+Documentation [here](./docs/unit_tests.md)
+
+## Background:
+The initial motivation was to analyse flight punctuality. When you google for this most results are not detailed enough to compare one flight ID against another.
