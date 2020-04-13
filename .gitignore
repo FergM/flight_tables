@@ -5,6 +5,7 @@ __pycache__/
 *.json
 *.p    # pickles
 *.xlsx
+data/
 
 # Environments
 env/
