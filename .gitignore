@@ -8,3 +8,8 @@ __pycache__/
 
 # Environments
 env/
+
+# Distribution Files
+dist/
+build/
+flight_tables.egg-info/

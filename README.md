@@ -34,7 +34,7 @@ The output is a csv with these columns:
 |    ...    |        |             |           |                    |                  |            |            |
 
 ## Test Suite
-Documentation [here](./docs/unit_tests.md)
+Documentation [here](https://github.com/FergM/flight_tables/blob/master/docs/unit_tests.md)
 
 ## Background:
 The initial motivation was to analyse flight punctuality. When you google for this most results are not detailed enough to compare one flight ID against another.
