@@ -21,6 +21,9 @@ Notes about possible improvements, manual validation and known bugs.
 * check4: Reverse check that flights in today's Normal aren't elsewhere and Operating is mapped once to Codeshare at least.
 
 # Known Bugs
+* Fails if API unavailable/empty
+    * There's no clean error catching for when the API fails or when API returns empty data.
+
 *  Day Overlap Bug: 
     * **Summary**: Date could be wrong if data overlaps two days.
     * Heathrow
