@@ -19,6 +19,7 @@ setuptools.setup(
     ],
     install_requires=[
         'bs4>=0.0.1',
+        'matplotlib>=3.2.1',
         'pandas>=0.25.3',
         'requests>=2.23.0',
     ],
