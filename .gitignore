@@ -4,6 +4,7 @@ __pycache__/
 # Data Files
 *.csv
 *.json
+*.pkl
 *.p    # pickles
 *.xlsx
 data/
