@@ -1,4 +1,5 @@
 __pycache__/
+.ipynb_checkpoints/
 
 # Data Files
 *.csv
@@ -9,6 +10,7 @@ data/
 
 # Environments
 env/
+flight_env/
 
 # Distribution Files
 dist/
