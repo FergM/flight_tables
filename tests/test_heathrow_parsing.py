@@ -2,6 +2,8 @@ from datetime import datetime, timedelta
 import json
 import unittest
 
+import requests
+
 from flight_tables.heathrow_parsing import extract_batch_heathrow, extract_flight_heathrow, fetch_heathrow_data
 
 class SampleData(object):
@@ -95,8 +97,10 @@ class TestHeathrowBatch(unittest.TestCase):
 class TestAPICaller(unittest.TestCase):
     
     def test_api_endpoint(self):
-        """Note this test is dynamic:
-                i.e. uses """
+        """Note this test requires an internet connection to pass.
+        
+        In particular, this test pings a Heathrow endpoint url and will only pass if the response is as expected.
+        """
         yesterday = datetime.today() - timedelta(days=1)
         yesterday_str = yesterday.strftime('%Y-%m-%d')
 
@@ -105,6 +109,15 @@ class TestAPICaller(unittest.TestCase):
         raw_flights_list = response["flightSummaryList"]["flight"]
 
         self.assertNotEqual(len(raw_flights_list), 0)
+
+    def test_api_endpoint_unsuccessful(self):
+        """Test a request which is known to be unsuccessful.
+        """
+        yesterday = datetime.today() - timedelta(days=1)
+        yesterday_str = yesterday.strftime('%Y-%m-%d')
+
+        with self.assertRaises(requests.exceptions.HTTPError):
+            response = fetch_heathrow_data(yesterday_str, "jibberish") # 'jibberish' is known to be an invalid parameter here
 
 if __name__ == '__main__':
    unittest.main()

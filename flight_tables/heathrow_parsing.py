@@ -31,9 +31,20 @@ def fetch_heathrow_data(iso_date_str, direction):
         url = 'https://api-dp-prod.dp.heathrow.com/infohub/api/v1/flights/' + direction + '/inactive/' + iso_date_str + 'Z'
         return url
 
-    def fetch_html_soup(url_to_scrape):
-        r = requests.get(url_to_scrape)
+    def fetch_html_soup(url_to_scrape, headers=None):
+        """Send a Get request to the specified URL.
+        
+        Returns:
+            Fail:
+                Raises Error if the request fails
+            Success:
+                soup (bs4.BeautifulSoup): Soup with the response content        
+        """
+        r = requests.get(url_to_scrape, headers = headers)
+        r.raise_for_status() # Raise error if get request returned an unsuccessful status code
+
         soup = BeautifulSoup(r.text, 'html.parser')
+
         return soup
 
     def soup_to_dict(soup, iso_date_str):
@@ -41,7 +52,8 @@ def fetch_heathrow_data(iso_date_str, direction):
 
     check_date_format(iso_date_str)
     url = make_url(iso_date_str, direction)
-    soup = fetch_html_soup(url)
+    headers={"origin": "https://www.heathrow.com"}
+    soup = fetch_html_soup(url, headers)
     heathrow_data = json.loads(str(soup))
 
     return heathrow_data
