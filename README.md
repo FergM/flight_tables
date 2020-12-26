@@ -1,3 +1,10 @@
+## Broken Datasource Alert:
+The default datasource no longer works.
+
+The heathrow website has changed and `heathrow_parsing.py` is out of date.
+
+The generic flight parsing could be useful for another airport. You would need to write something similar to `heathrow_parsing.py` for it.
+
 # Flight Tables: Arrivals and Departures Parsing Toolkit
 ## What is It?
 
