@@ -1,14 +1,6 @@
 __pycache__/
 .ipynb_checkpoints/
 
-# Data Files
-*.csv
-*.json
-*.pkl
-*.p    # pickles
-*.xlsx
-data/
-
 # Environments
 env/
 flight_env/
